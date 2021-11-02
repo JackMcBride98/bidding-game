@@ -31,10 +31,15 @@ function App() {
     setView("scoreboard");
   }
 
+  const submitGame = () => {
+    console.log("sumbit game")
+    setView("home")
+  }
+
   switch(view){
     case "scoreboard":
       return(
-        <Scoreboard />
+        <Scoreboard submitGame={submitGame}/>
       );
     default:
       return (
