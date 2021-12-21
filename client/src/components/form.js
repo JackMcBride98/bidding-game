@@ -80,9 +80,10 @@ function Form({ handleSubmit }) {
             onChange={(e) => {
               e.preventDefault();
               if (
-                e.target.value > 1 &&
-                e.target.value * players.length <= 52 &&
-                !e.target.value.includes(".")
+                true
+                // e.target.value > 1 &&
+                // e.target.value * players.length <= 52 &&
+                // !e.target.value.includes(".")
               ) {
                 setRounds(e.target.value);
               }
