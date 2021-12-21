@@ -23,7 +23,7 @@ app.use(
 
 app.use(express.json());
 
-app.use(express.static(path.resolve(__dirname, "../client/build")));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 //Set up mongoose connection
 var mongoose = require("mongoose");
@@ -69,9 +69,9 @@ app.use(cors());
 
 let count;
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "/client/build/index.html"));
+// });
 
 app.get("/count", (req, res) => {
   // console.log("get count " + count);
