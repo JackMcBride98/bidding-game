@@ -21,7 +21,7 @@
   "scripts": {
     "devstart": "cross-env TAILWIND_MODE=watch craco start",
     "start": "craco start",
-    "build": "craco build",
+    "build": "cross-env INLINE_RUNTIME_CHUNK=false craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },

@@ -8,7 +8,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 const port = process.env.PORT || 5000;
 
-app.use(helmet());
+app.use(helmet({}));
 app.use(compression());
 
 var Game = require("./models/game");
