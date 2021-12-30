@@ -38,6 +38,7 @@ function App() {
       newPlayers.sort((a, b) =>
         a.totalScore < b.totalScore ? 1 : b.totalScore < a.totalScore ? -1 : 0
       );
+      newPlayers = newPlayers.filter((player) => player.gameCount !== 0);
       setPlayers(newPlayers);
       setIsLoading(false);
     };
@@ -97,6 +98,7 @@ function App() {
         newPlayers.sort((a, b) =>
           a.totalScore < b.totalScore ? 1 : b.totalScore < a.totalScore ? -1 : 0
         );
+        newPlayers = newPlayers.filter((player) => player.gameCount !== 0);
         setPlayers(newPlayers);
         setIsLoading(false);
         setView("home");

@@ -28,7 +28,7 @@ function GamePage(props) {
         <table className="divide-y divide-black">
           <thead>
             <tr className="flex text-center w-full divide-x divide-black">
-              <th key="Suits" className="w-9 flex whitespace-nowrap">
+              <th key="Suits" className="w-9 pr-0.5 flex whitespace-nowrap">
                 Suits
               </th>
               {props.game.players.map((player) => (
@@ -56,7 +56,7 @@ function GamePage(props) {
               />
             ))}
             <tr className="border-t border-black text-base flex divide-x divide-black">
-              <td className="py-2 w-9">Total</td>
+              <td className="py-2 w-9 pr-0.5">Total</td>
               {props.game.totalScores.map((score, j) => (
                 <td key={j} className="py-2 w-16 text-center">
                   {score}

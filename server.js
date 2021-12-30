@@ -55,14 +55,15 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 //     console.log(err);
 //   }
 //   console.log("Count deleted");
-//   let first = new Count({ count: 0 });
-//   first.save(function (err) {
-//     if (err) {
-//       console.log(err);
-//     }
-//     console.log("saved new count");
-//     console.log(first);
-//   });
+// });
+// let first = new Count({ count: 0 });
+// first.save(function (err) {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log("saved new count");
+//   console.log(first);
+// });
 // });
 
 app.use(cors());
@@ -183,20 +184,20 @@ app.post("/game", (req, res) => {
       // console.log({newGameObject})
       var newGame = new Game(_.extend(req.body));
       newGame.players = players;
-      if (req.body.addToLeaderboard) {
-        players.forEach(async (player, i) => {
+      players.forEach(async (player, i) => {
+        if (req.body.addToLeaderboard) {
           player.gameCount = player.gameCount + 1;
           player.totalScore = player.totalScore + newGame.totalScores[i];
           player.totalHands = player.totalHands + newGame.rounds.length;
-          player.games.push(newGame._id);
-          player.save(function (err) {
-            if (err) {
-              console.log(err);
-            }
-            //saved
-          });
+        }
+        player.games.push(newGame._id);
+        player.save(function (err) {
+          if (err) {
+            console.log(err);
+          }
+          //saved
         });
-      }
+      });
       Game.countDocuments({}, function callback(err, count) {
         if (err) {
           console.log(err);
