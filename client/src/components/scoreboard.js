@@ -14,6 +14,7 @@ function Scoreboard({ submitGame }) {
   const [cumulativeScores, setCumulativeScores] = useState([]);
   const [bidsDone, setBidsDone] = useState(false);
   const [addToLeaderboard, setAddToLeaderboard] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     window.addEventListener("beforeunload", alertUser);
@@ -47,12 +48,22 @@ function Scoreboard({ submitGame }) {
     if (gameData.randomiseSuits) {
       shuffle(suits);
     }
+    let suitPlaceholder = [...suits];
+
     for (let i = gameData.rounds; i > 0; i--) {
-      theRounds.push({ hands: i, suit: suits[(gameData.rounds - i) % 5] });
+      // theRounds.push({ hands: i, suit: suits[(gameData.rounds - i) % 5] });
+      theRounds.push({ hands: i, suit: suitPlaceholder.pop() });
+      if (suitPlaceholder.length === 0) {
+        suitPlaceholder = [...suits];
+      }
     }
     if (gameData.upAndDown) {
       for (let i = 0; i < gameData.rounds; i++) {
-        theRounds.push({ hands: i + 1, suit: suits[i % 5] });
+        // theRounds.push({ hands: i + 1, suit: suits[i % 5] });
+        theRounds.push({ hands: i + 1, suit: suitPlaceholder.pop() });
+        if (suitPlaceholder.length === 0) {
+          suitPlaceholder = [...suits];
+        }
       }
     }
     if (gameData.bonusRound) {
@@ -182,7 +193,7 @@ function Scoreboard({ submitGame }) {
     return <Form handleSubmit={handleSubmit} />;
   } else {
     return (
-      <div className="flex w-max flex-col justify-items-center text-sm overflow-x-auto">
+      <div className="flex w-max flex-col justify-items-center text-sm overflow-x-auto p-1">
         {/* <p>Location: {gameData.location}</p> */}
         <table className="mb-5 divide-y divide-black border-collapse">
           <thead>
@@ -242,25 +253,69 @@ function Scoreboard({ submitGame }) {
                 onChange={() => setAddToLeaderboard(!addToLeaderboard)}
               />
             </label>
+            {isSubmitting ? (
+              <p>Submitting game ...</p>
+            ) : (
+              <button
+                onClick={() => {
+                  setIsSubmitting(true);
+                  submitGame(
+                    gameData,
+                    rounds,
+                    roundBids,
+                    roundGets,
+                    roundScores,
+                    cumulativeScores[rounds.length - 1],
+                    addToLeaderboard
+                  );
+                }}
+                className="rounded-lg border border-black p-2 w-max"
+              >
+                Submit Game!
+              </button>
+            )}
+          </div>
+        ) : isSubmitting ? (
+          <p>Submitting game... </p>
+        ) : (
+          <div className="flex flex-col items-center mb-4 space-y-4 mt-80">
+            <label className="border p-2 rounded-lg w-max">
+              Add to Leaderboard
+              <input
+                className="text-lg text-stone-900 ml-4 w-4 h-4"
+                type="checkbox"
+                checked={addToLeaderboard}
+                onChange={() => setAddToLeaderboard(!addToLeaderboard)}
+              />
+            </label>
             <button
-              onClick={() =>
-                submitGame(
-                  gameData,
-                  rounds,
-                  roundBids,
-                  roundGets,
-                  roundScores,
-                  cumulativeScores[rounds.length - 1],
-                  addToLeaderboard
-                )
-              }
+              onClick={() => {
+                if (
+                  currentRound !== 0 &&
+                  window.confirm(
+                    "🤔Are you sure you want to submit the game early🤔?\n(Add To leaderboard === " +
+                      addToLeaderboard +
+                      " )"
+                  )
+                ) {
+                  setIsSubmitting(true);
+                  console.log(cumulativeScores);
+                  submitGame(
+                    gameData,
+                    rounds.slice(0, currentRound),
+                    roundBids.slice(0, currentRound),
+                    roundGets.slice(0, currentRound),
+                    roundScores.slice(0, currentRound),
+                    cumulativeScores[currentRound - 1],
+                    addToLeaderboard
+                  );
+                }
+              }}
               className="rounded-lg border border-black p-2 w-max"
             >
-              Submit Game!
+              Submit game early?
             </button>
           </div>
-        ) : (
-          <></>
         )}
       </div>
     );

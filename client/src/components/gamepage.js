@@ -31,12 +31,13 @@ function GamePage(props) {
               <th key="Suits" className="w-9 pr-0.5 flex whitespace-nowrap">
                 Suits
               </th>
-              {props.game.players.map((player) => (
+              {console.log(props.game.unsortedPlayers)}
+              {props.game.unsortedPlayers.map((player) => (
                 <th
-                  key={player.name}
+                  key={player}
                   className="flex w-16 justify-center text-center"
                 >
-                  {formatName(player.name)}
+                  {formatName(player)}
                 </th>
               ))}
               <th key="r0w"></th>

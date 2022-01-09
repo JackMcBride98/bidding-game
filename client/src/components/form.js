@@ -5,8 +5,8 @@ function Form({ handleSubmit }) {
   const [randomiseSuits, setRandomiseSuits] = useState(true);
   const [upAndDown, setUpAndDown] = useState(false);
   const [bonusRound, setBonusRound] = useState(false);
-  const [players, setPlayers] = useState(["Jack", "Bradley", "Matt", "Liam"]);
-  const [location, setLocation] = useState("Home");
+  const [players, setPlayers] = useState(["", ""]);
+  const [location, setLocation] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();

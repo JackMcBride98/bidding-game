@@ -12,10 +12,11 @@ function App() {
   // const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [view, setView] = useState("home");
+  const [view, setView] = useState("recentGames");
   const [players, setPlayers] = useState([]);
   const [recentGames, setRecentGames] = useState([]);
   const [viewGame, setViewGame] = useState([]);
+  const [isLoadingMoreGames, setIsLoadingMoreGames] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,8 +27,10 @@ function App() {
       setCount(result.data.count);
       let newGames = gamesResult.data;
       newGames.forEach(function (game) {
+        game.unsortedPlayers = [];
         game.players.forEach(function (player, index) {
           player.score = game.totalScores[index];
+          game.unsortedPlayers.push(player.name);
         });
         game.players.sort((a, b) =>
           a.score < b.score ? 1 : b.score < a.score ? -1 : 0
@@ -86,8 +89,10 @@ function App() {
         setCount(result.data.count);
         let newGames = gamesResult.data;
         newGames.forEach(function (game) {
+          game.unsortedPlayers = [];
           game.players.forEach(function (player, index) {
             player.score = game.totalScores[index];
+            game.unsortedPlayers.push(player.name);
           });
           game.players.sort((a, b) =>
             a.score < b.score ? 1 : b.score < a.score ? -1 : 0
@@ -101,7 +106,7 @@ function App() {
         newPlayers = newPlayers.filter((player) => player.gameCount !== 0);
         setPlayers(newPlayers);
         setIsLoading(false);
-        setView("home");
+        setView("recentGames");
       })
       .catch(function (error) {
         console.log(error);
@@ -110,17 +115,21 @@ function App() {
 
   const manageGames = async () => {
     if (view === "recentGames") {
+      setIsLoadingMoreGames(true);
       const allGamesResult = await axios(serverurl + "/allGames");
       let newGames = allGamesResult.data;
       newGames.forEach(function (game) {
+        game.unsortedPlayers = [];
         game.players.forEach(function (player, index) {
           player.score = game.totalScores[index];
+          game.unsortedPlayers.push(player.name);
         });
         game.players.sort((a, b) =>
           a.score < b.score ? 1 : b.score < a.score ? -1 : 0
         );
       });
       setRecentGames(newGames);
+      setIsLoadingMoreGames(false);
       setView("allGames");
     } else {
       setRecentGames(recentGames.slice(0, 5));
@@ -177,12 +186,18 @@ function App() {
             isLoading={isLoading}
             handleMoreInfo={handleMoreInfo}
           />
-          <button
-            onClick={() => manageGames()}
-            className="border border-black rounded-lg p-2 bg-white mb-6"
-          >
-            {view === "allGames" ? "Show only recent games" : "See more games"}
-          </button>
+          {isLoadingMoreGames ? (
+            <p>Loading more games...</p>
+          ) : (
+            <button
+              onClick={() => manageGames()}
+              className="border border-black rounded-lg p-2 bg-white mb-6"
+            >
+              {view === "allGames"
+                ? "Show only recent games"
+                : "See more games"}
+            </button>
+          )}
         </Homepage>
       </div>
     );
