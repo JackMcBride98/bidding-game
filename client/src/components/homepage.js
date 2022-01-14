@@ -7,7 +7,7 @@ function Homepage(props) {
       // style={{ backgroundImage: `url(${background})` }}
     >
       <h1 className="text-4xl font-bold text-stone-900">ET Bidding Game</h1>
-      <img src={aces} alt="joe" className="w-64" />
+      <img src={aces} alt="aces" className="w-72 bg-transparent" />
       <button
         onClick={() => props.createNewGame()}
         className="border border-black rounded-lg p-2 bg-white"
