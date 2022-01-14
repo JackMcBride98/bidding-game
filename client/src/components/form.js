@@ -5,8 +5,8 @@ function Form({ handleSubmit }) {
   const [randomiseSuits, setRandomiseSuits] = useState(true);
   const [upAndDown, setUpAndDown] = useState(false);
   const [bonusRound, setBonusRound] = useState(false);
-  const [players, setPlayers] = useState(["Jack", "Bradley", "Matt", "Liam"]);
-  const [location, setLocation] = useState("Home");
+  const [players, setPlayers] = useState(["", ""]);
+  const [location, setLocation] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -80,9 +80,10 @@ function Form({ handleSubmit }) {
             onChange={(e) => {
               e.preventDefault();
               if (
-                e.target.value > 1 &&
-                e.target.value * players.length <= 52 &&
-                !e.target.value.includes(".")
+                true
+                // e.target.value > 1 &&
+                // e.target.value * players.length <= 52 &&
+                // !e.target.value.includes(".")
               ) {
                 setRounds(e.target.value);
               }

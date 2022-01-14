@@ -118,7 +118,7 @@ function RoundRow({
   } else {
     return (
       <tr className="divide-x divide-black flex h-8">
-        <td className="w-9">
+        <td className="flex w-9 text-left whitespace-nowrap py-1">
           {round.hands} {round.suit}
         </td>
         {roundBids.map((bid, index) => (
