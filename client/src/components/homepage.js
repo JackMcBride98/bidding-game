@@ -1,4 +1,4 @@
-import joe from "../images/joe.jfif";
+import aces from "../images/aces.jpg";
 
 function Homepage(props) {
   return (
@@ -7,10 +7,7 @@ function Homepage(props) {
       // style={{ backgroundImage: `url(${background})` }}
     >
       <h1 className="text-4xl font-bold text-stone-900">ET Bidding Game</h1>
-      <img src={joe} alt="joe" className="w-40 h-83" />
-      <h1 className="text-2xl font-bold text-stone-900">
-        Merry Christmas Joe!
-      </h1>
+      <img src={aces} alt="aces" className="w-72 bg-transparent" />
       <button
         onClick={() => props.createNewGame()}
         className="border border-black rounded-lg p-2 bg-white"
