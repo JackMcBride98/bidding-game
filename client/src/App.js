@@ -153,11 +153,29 @@ function App() {
     setView("gamepage");
   };
 
+  const handleSort = (column) => {
+    console.log("sorting");
+    console.log(players[0][column]);
+    if (column === "pph") {
+      setPlayers(
+        players.forEach(
+          (player) => (player.pph = player.totalScore / player.totalHands)
+        )
+      );
+    }
+    setPlayers([
+      ...players.sort((a, b) =>
+        a[column] < b[column] ? 1 : a[column] > b[column] ? -1 : 0
+      ),
+    ]);
+    console.log(players);
+  };
+
   if (view === "scoreboard") {
-    return <Scoreboard submitGame={submitGame} />;
+    return <Scoreboard submitGame={submitGame} setAppView={setView} />;
   } else if (view === "gamepage") {
     return (
-      <GamePage game={viewGame}>
+      <GamePage game={viewGame} setAppView={setView}>
         <button
           onClick={() => setView("home")}
           className="border border-black rounded-lg p-2 bg-white mb-6 text-stone-900 text-lg"
@@ -177,7 +195,11 @@ function App() {
             ❤️ <span className="font-bold">{count}</span>
           </button>
           <h1 className="text-2xl font-semibold text-stone-900">Leaderboard</h1>
-          <Leaderboard players={players} isLoading={isLoading} />
+          <Leaderboard
+            players={players}
+            isLoading={isLoading}
+            handleSort={handleSort}
+          />
           <h1 className="text-2xl font-semibold text-stone-900">
             Game History{" "}
           </h1>

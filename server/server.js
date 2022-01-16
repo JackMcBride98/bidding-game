@@ -160,6 +160,7 @@ app.post("/game", (req, res) => {
         if (!player) {
           player = new Player({
             name: name,
+            wins: 0,
             gameCount: 0,
             totalScore: 0,
             totalHands: 0,
@@ -183,8 +184,12 @@ app.post("/game", (req, res) => {
       // console.log({newGameObject})
       var newGame = new Game(_.extend(req.body));
       newGame.players = players;
+      let highestScore = Math.max(...newGame.totalScores);
       if (req.body.addToLeaderboard) {
         players.forEach(async (player, i) => {
+          if (highestScore === newGame.totalScores[i]) {
+            player.wins = player.wins + 1;
+          }
           player.gameCount = player.gameCount + 1;
           player.totalScore = player.totalScore + newGame.totalScores[i];
           player.totalHands = player.totalHands + newGame.rounds.length;

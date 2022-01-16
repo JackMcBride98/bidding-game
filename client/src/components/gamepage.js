@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RoundRow from "../components/roundRow";
 
 function GamePage(props) {
   const formatName = (name) => {
     return name.charAt(0).toUpperCase() + name.toLowerCase().slice(1);
   };
+
+  const alertUser = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", alertUser, false);
+    return () => {
+      window.removeEventListener("beforeunload", alertUser, false);
+    };
+  });
+
+  const highestScore = Math.max(...props.game.totalScores);
 
   return (
     <div
@@ -59,8 +73,23 @@ function GamePage(props) {
             <tr className="border-t border-black text-base flex divide-x divide-black">
               <td className="py-2 w-9 pr-0.5">Total</td>
               {props.game.totalScores.map((score, j) => (
-                <td key={j} className="py-2 w-16 text-center">
+                <td
+                  key={j}
+                  className={
+                    "py-2 w-16 text-center " +
+                    (highestScore === score && "bg-yellow-500")
+                  }
+                >
                   {score}
+                </td>
+              ))}
+              <td></td>
+            </tr>
+            <tr className="border-t border-black text-base flex divide-x divide-black">
+              <td className="py-2 w-9 pr-0.5">PPH</td>
+              {props.game.totalScores.map((score, j) => (
+                <td key={j} className="py-2 w-16 text-center">
+                  {(score / props.game.rounds.length).toFixed(2)}
                 </td>
               ))}
               <td></td>

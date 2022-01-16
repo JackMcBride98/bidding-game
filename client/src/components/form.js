@@ -2,11 +2,12 @@ import React, { useState } from "react";
 
 function Form({ handleSubmit }) {
   const [rounds, setRounds] = useState(2);
-  const [randomiseSuits, setRandomiseSuits] = useState(true);
+  const [randomiseSuits, setRandomiseSuits] = useState(false);
   const [upAndDown, setUpAndDown] = useState(false);
   const [bonusRound, setBonusRound] = useState(false);
-  const [players, setPlayers] = useState(["", ""]);
-  const [location, setLocation] = useState("");
+  // const [players, setPlayers] = useState(["Jack", "Bradley", "Matt", "Liam"]);
+  const [players, setPlayers] = useState(["a", "b"]);
+  const [location, setLocation] = useState("abc");
 
   const onSubmit = (event) => {
     event.preventDefault();
