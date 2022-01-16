@@ -2,7 +2,7 @@ import Form from "./form";
 import RoundRow from "./roundRow";
 import React, { useState, useEffect } from "react";
 
-function Scoreboard({ submitGame }) {
+function Scoreboard({ submitGame, setAppView }) {
   const [view, setView] = useState("form");
   const [gameData, setGameData] = useState({});
   const suits = ["♥", "♠", "♦", "♣", "×"];
@@ -190,10 +190,22 @@ function Scoreboard({ submitGame }) {
   };
 
   if (view === "form") {
-    return <Form handleSubmit={handleSubmit} />;
+    return (
+      <div className="flex flex-col items-center">
+        <Form handleSubmit={handleSubmit} />
+        <button
+          onClick={(e) => {
+            setAppView("home");
+          }}
+          className="border border-black rounded-lg p-2 bg-white mb-6 text-stone-900 text-lg"
+        >
+          Back to Home
+        </button>
+      </div>
+    );
   } else {
     return (
-      <div className="flex w-max flex-col justify-items-center text-sm overflow-x-auto p-1">
+      <div className="flex w-max flex-col text-sm overflow-x-auto p-1 mx-auto">
         {/* <p>Location: {gameData.location}</p> */}
         <table className="mb-5 divide-y divide-black border-collapse">
           <thead>
