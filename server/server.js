@@ -166,7 +166,12 @@ app.post("/game", (req, res) => {
             totalHands: 0,
             games: [],
           });
-          // player.save();
+          player.save(function (err) {
+            if (err) {
+              console.log(err);
+            }
+            //saved
+          });
         }
         players[index] = player;
         callback();
