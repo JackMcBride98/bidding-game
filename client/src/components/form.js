@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 function Form({ handleSubmit }) {
-  const [rounds, setRounds] = useState(2);
+  const [rounds, setRounds] = useState(10);
   const [randomiseSuits, setRandomiseSuits] = useState(false);
   const [upAndDown, setUpAndDown] = useState(false);
-  const [bonusRound, setBonusRound] = useState(false);
-  // const [players, setPlayers] = useState(["Jack", "Bradley", "Matt", "Liam"]);
-  const [players, setPlayers] = useState(["a", "b"]);
-  const [location, setLocation] = useState("abc");
+  const [bonusRound, setBonusRound] = useState(true);
+  const [players, setPlayers] = useState(['Jack', 'Bradley', 'Matt', 'Liam']);
+  const [location, setLocation] = useState('GG');
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -29,38 +28,38 @@ function Form({ handleSubmit }) {
   const formValidate = () => {
     let errors = {};
     if (!Number.isInteger(parseInt(rounds))) {
-      errors.rounds = "Rounds must be an Integer";
+      errors.rounds = 'Rounds must be an Integer';
     }
     if (parseInt(rounds) < 2) {
-      errors.rounds = "Rounds must be greater than 1";
+      errors.rounds = 'Rounds must be greater than 1';
     }
     if (parseInt(rounds) * players.length > 52) {
       errors.rounds =
-        "Rounds multiplied by players must be less than 52 (the number of cards in the deck)";
+        'Rounds multiplied by players must be less than 52 (the number of cards in the deck)';
     }
-    if (typeof upAndDown !== "boolean") {
-      errors.upAndDown = "UpAndDown must be a boolean";
+    if (typeof upAndDown !== 'boolean') {
+      errors.upAndDown = 'UpAndDown must be a boolean';
     }
-    if (typeof bonusRound !== "boolean") {
-      errors.bonusRound = "UpAndDown must be a boolean";
+    if (typeof bonusRound !== 'boolean') {
+      errors.bonusRound = 'UpAndDown must be a boolean';
     }
-    if (typeof randomiseSuits !== "boolean") {
-      errors.bonusRound = "RandomiseSuits must be a boolean";
+    if (typeof randomiseSuits !== 'boolean') {
+      errors.bonusRound = 'RandomiseSuits must be a boolean';
     }
     players.forEach((player) => {
       if (!player) {
-        errors.players = "Player Name must not be empty";
+        errors.players = 'Player Name must not be empty';
       }
     });
     if (!location) {
-      errors.location = "location must not be empty";
+      errors.location = 'location must not be empty';
     }
     let noDups = new Set(players.map((player) => player.trim().toLowerCase()));
     if (noDups.size !== players.length) {
-      errors.playerDuplicates = "No duplicate names";
+      errors.playerDuplicates = 'No duplicate names';
     }
     if (players.length < 2) {
-      errors.playerCount = "Must have at least two players";
+      errors.playerCount = 'Must have at least two players';
     }
     return errors;
   };
@@ -96,6 +95,7 @@ function Form({ handleSubmit }) {
           <input
             className="ml-4 w-4 h-4"
             type="checkbox"
+            style={{ accentColor: '#ec4899' }}
             checked={randomiseSuits}
             onChange={(e) => setRandomiseSuits(!randomiseSuits)}
           />
@@ -104,6 +104,7 @@ function Form({ handleSubmit }) {
           Up and Down:
           <input
             className="ml-4 w-4 h-4"
+            style={{ accentColor: '#ec4899' }}
             type="checkbox"
             checked={upAndDown}
             onChange={(e) => setUpAndDown(!upAndDown)}
@@ -114,6 +115,7 @@ function Form({ handleSubmit }) {
           <input
             className="ml-5 w-4 h-4"
             type="checkbox"
+            style={{ accentColor: '#ec4899' }}
             checked={bonusRound}
             onChange={(e) => setBonusRound(!bonusRound)}
           />
@@ -127,7 +129,7 @@ function Form({ handleSubmit }) {
               value={players[i]}
               onChange={(e) => {
                 e.preventDefault();
-                if (!e.target.value.includes(" ")) {
+                if (!e.target.value.includes(' ')) {
                   let newArr = [...players];
                   newArr[i] = e.target.value;
                   setPlayers(newArr);
@@ -141,12 +143,12 @@ function Form({ handleSubmit }) {
             onClick={(e) => {
               e.preventDefault();
               let newArr = [...players];
-              newArr.push("");
+              newArr.push('');
               setPlayers(newArr);
             }}
             className="p-2 border-black border rounded-lg bg-gray-100"
           >
-            Add Player{" "}
+            Add Player{' '}
           </button>
           <button
             onClick={(e) => {
@@ -157,7 +159,7 @@ function Form({ handleSubmit }) {
             }}
             className="p-2 border-black border rounded-lg bg-gray-100"
           >
-            Remove Player{" "}
+            Remove Player{' '}
           </button>
         </div>
         <label>
