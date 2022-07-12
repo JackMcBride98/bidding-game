@@ -51,23 +51,21 @@ function Scoreboard({ submitGame, setAppView }) {
     let suitPlaceholder = [...suits];
 
     for (let i = gameData.rounds; i > 0; i--) {
-      // theRounds.push({ hands: i, suit: suits[(gameData.rounds - i) % 5] });
       theRounds.push({ hands: i, suit: suitPlaceholder.pop() });
       if (suitPlaceholder.length === 0) {
         suitPlaceholder = [...suits];
       }
     }
+    if (gameData.bonusRound) {
+      theRounds.push({ hands: 1, suit: 'B' });
+    }
     if (gameData.upAndDown) {
-      for (let i = 0; i < gameData.rounds; i++) {
-        // theRounds.push({ hands: i + 1, suit: suits[i % 5] });
+      for (let i = 1; i < gameData.rounds; i++) {
         theRounds.push({ hands: i + 1, suit: suitPlaceholder.pop() });
         if (suitPlaceholder.length === 0) {
           suitPlaceholder = [...suits];
         }
       }
-    }
-    if (gameData.bonusRound) {
-      theRounds.push({ hands: 1, suit: 'B' });
     }
     setRounds(theRounds);
     setRoundBids(
