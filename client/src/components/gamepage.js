@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import RoundRow from "../components/roundRow";
+import React, { useEffect } from 'react';
+import RoundRow from '../components/roundRow';
 
 function GamePage(props) {
   const formatName = (name) => {
@@ -8,13 +8,13 @@ function GamePage(props) {
 
   const alertUser = (e) => {
     e.preventDefault();
-    e.returnValue = "";
+    e.returnValue = '';
   };
 
   useEffect(() => {
-    window.addEventListener("beforeunload", alertUser, false);
+    window.addEventListener('beforeunload', alertUser, false);
     return () => {
-      window.removeEventListener("beforeunload", alertUser, false);
+      window.removeEventListener('beforeunload', alertUser, false);
     };
   });
 
@@ -22,7 +22,7 @@ function GamePage(props) {
 
   return (
     <div
-      id={props.game_id + "gamepage"}
+      id={props.game_id + 'gamepage'}
       className="grid justify-center justify-items-center gap-4 p-2"
     >
       <h1 className="text-4xl font-bold text-stone-900">
@@ -45,7 +45,6 @@ function GamePage(props) {
               <th key="Suits" className="w-9 pr-0.5 flex whitespace-nowrap">
                 Suits
               </th>
-              {console.log(props.game.unsortedPlayers)}
               {props.game.unsortedPlayers.map((player) => (
                 <th
                   key={player}
@@ -76,8 +75,8 @@ function GamePage(props) {
                 <td
                   key={j}
                   className={
-                    "py-2 w-16 text-center " +
-                    (highestScore === score && "bg-yellow-500")
+                    'py-2 w-16 text-center ' +
+                    (highestScore === score && 'bg-yellow-500')
                   }
                 >
                   {score}

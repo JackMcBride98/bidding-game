@@ -1,11 +1,11 @@
-import Form from "./form";
-import RoundRow from "./roundRow";
-import React, { useState, useEffect } from "react";
+import Form from './form';
+import RoundRow from './roundRow';
+import React, { useState, useEffect } from 'react';
 
 function Scoreboard({ submitGame, setAppView }) {
-  const [view, setView] = useState("form");
+  const [view, setView] = useState('form');
   const [gameData, setGameData] = useState({});
-  const suits = ["♥", "♠", "♦", "♣", "×"];
+  const suits = ['♥', '♠', '♦', '♣', '×'];
   const [rounds, setRounds] = useState([]);
   const [currentRound, setCurrentRound] = useState(0);
   const [roundBids, setRoundBids] = useState([]);
@@ -17,14 +17,14 @@ function Scoreboard({ submitGame, setAppView }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("beforeunload", alertUser);
+    window.addEventListener('beforeunload', alertUser);
     return () => {
-      window.removeEventListener("beforeunload", alertUser);
+      window.removeEventListener('beforeunload', alertUser);
     };
   }, []);
   const alertUser = (e) => {
     e.preventDefault();
-    e.returnValue = "";
+    e.returnValue = '';
   };
 
   const shuffle = (array) => {
@@ -67,7 +67,7 @@ function Scoreboard({ submitGame, setAppView }) {
       }
     }
     if (gameData.bonusRound) {
-      theRounds.push({ hands: 1, suit: "B" });
+      theRounds.push({ hands: 1, suit: 'B' });
     }
     setRounds(theRounds);
     setRoundBids(
@@ -90,18 +90,18 @@ function Scoreboard({ submitGame, setAppView }) {
         .fill(0)
         .map(() => new Array(gameData.players.length).fill(0))
     );
-    setView("scoreboard");
+    setView('scoreboard');
   };
 
   const handleBidsDone = () => {
     let bidsSum = roundBids[currentRound].reduce((a, b) => a + b, 0);
     if (bidsSum === rounds[currentRound].hands) {
       alert(
-        "Bids Total(" +
+        'Bids Total(' +
           bidsSum +
-          ") cannot equal number of hands(" +
+          ') cannot equal number of hands(' +
           rounds[currentRound].hands +
-          ")"
+          ')'
       );
     } else {
       setBidsDone(true);
@@ -126,22 +126,22 @@ function Scoreboard({ submitGame, setAppView }) {
       setBidsDone(false);
     } else {
       alert(
-        "Gets total(" +
+        'Gets total(' +
           getsSum +
-          ") must equal number of hands(" +
+          ') must equal number of hands(' +
           rounds[currentRound].hands +
-          ")"
+          ')'
       );
     }
   };
 
   const handleBidsChange = (e, i) => {
-    if (e === "+") {
+    if (e === '+') {
       let arr = [...roundBids];
       arr[currentRound][i] = arr[currentRound][i] + 1;
       setRoundBids(arr);
     }
-    if (e === "-") {
+    if (e === '-') {
       if (roundBids[currentRound][i] > 0) {
         let arr = [...roundBids];
         arr[currentRound][i] = arr[currentRound][i] - 1;
@@ -151,12 +151,12 @@ function Scoreboard({ submitGame, setAppView }) {
   };
 
   const handleGetsChange = (e, i) => {
-    if (e === "+") {
+    if (e === '+') {
       let arr = [...roundGets];
       arr[currentRound][i] = arr[currentRound][i] + 1;
       setRoundGets(arr);
     }
-    if (e === "-") {
+    if (e === '-') {
       if (roundGets[currentRound][i] > 0) {
         let arr = [...roundGets];
         arr[currentRound][i] = arr[currentRound][i] - 1;
@@ -189,13 +189,13 @@ function Scoreboard({ submitGame, setAppView }) {
     return newArray;
   };
 
-  if (view === "form") {
+  if (view === 'form') {
     return (
       <div className="flex flex-col items-center">
         <Form handleSubmit={handleSubmit} />
         <button
           onClick={(e) => {
-            setAppView("home");
+            setAppView('home');
           }}
           className="border border-black rounded-lg p-2 bg-white mb-6 text-stone-900 text-lg"
         >
@@ -253,8 +253,8 @@ function Scoreboard({ submitGame, setAppView }) {
               onClick={() => handleUndo()}
               className="border border-black rounded-lg text-xs p-1"
             >
-              {" "}
-              Undo{" "}
+              {' '}
+              Undo{' '}
             </button>
             <label className="border p-2 rounded-lg w-max">
               Add to Leaderboard
@@ -305,13 +305,12 @@ function Scoreboard({ submitGame, setAppView }) {
                 if (
                   currentRound !== 0 &&
                   window.confirm(
-                    "🤔Are you sure you want to submit the game early🤔?\n(Add To leaderboard === " +
+                    '🤔Are you sure you want to submit the game early🤔?\n(Add To leaderboard === ' +
                       addToLeaderboard +
-                      " )"
+                      ' )'
                   )
                 ) {
                   setIsSubmitting(true);
-                  console.log(cumulativeScores);
                   submitGame(
                     gameData,
                     rounds.slice(0, currentRound),

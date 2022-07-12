@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Homepage from "./components/homepage";
-import Scoreboard from "./components/scoreboard";
-import Leaderboard from "./components/leaderboard";
-import GameHistory from "./components/gamehistory";
-import GamePage from "./components/gamepage";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Homepage from './components/homepage';
+import Scoreboard from './components/scoreboard';
+import Leaderboard from './components/leaderboard';
+import GameHistory from './components/gamehistory';
+import GamePage from './components/gamepage';
 // const serverurl =  "http://localhost:5000";
-const serverurl = "";
+const serverurl = '';
 
 function App() {
   // const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [view, setView] = useState("recentGames");
+  const [view, setView] = useState('recentGames');
   const [players, setPlayers] = useState([]);
   const [recentGames, setRecentGames] = useState([]);
   const [viewGame, setViewGame] = useState([]);
@@ -21,9 +21,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const result = await axios(serverurl + "/count");
-      const playersResult = await axios(serverurl + "/players");
-      const gamesResult = await axios(serverurl + "/recentGames");
+      const result = await axios(serverurl + '/count');
+      const playersResult = await axios(serverurl + '/players');
+      const gamesResult = await axios(serverurl + '/recentGames');
       setCount(result.data.count);
       let newGames = gamesResult.data;
       newGames.forEach(function (game) {
@@ -49,12 +49,12 @@ function App() {
   }, []);
 
   const postCount = async () => {
-    const result = await axios.post(serverurl + "/count");
+    const result = await axios.post(serverurl + '/count');
     setCount(result.data.count);
   };
 
   const createNewGame = () => {
-    setView("scoreboard");
+    setView('scoreboard');
   };
 
   const submitGame = async (
@@ -66,9 +66,8 @@ function App() {
     totalScores,
     addToLeaderboard
   ) => {
-    // console.log("sumbit game");
     axios
-      .post(serverurl + "/game", {
+      .post(serverurl + '/game', {
         location: gameData.location,
         date: new Date(),
         players: gameData.players,
@@ -83,9 +82,9 @@ function App() {
       })
       .then(async function (response) {
         setIsLoading(true);
-        const result = await axios(serverurl + "/count");
-        const playersResult = await axios(serverurl + "/players");
-        const gamesResult = await axios(serverurl + "/recentGames");
+        const result = await axios(serverurl + '/count');
+        const playersResult = await axios(serverurl + '/players');
+        const gamesResult = await axios(serverurl + '/recentGames');
         setCount(result.data.count);
         let newGames = gamesResult.data;
         newGames.forEach(function (game) {
@@ -106,7 +105,7 @@ function App() {
         newPlayers = newPlayers.filter((player) => player.gameCount !== 0);
         setPlayers(newPlayers);
         setIsLoading(false);
-        setView("recentGames");
+        setView('recentGames');
       })
       .catch(function (error) {
         console.log(error);
@@ -114,9 +113,9 @@ function App() {
   };
 
   const manageGames = async () => {
-    if (view === "recentGames") {
+    if (view === 'recentGames') {
       setIsLoadingMoreGames(true);
-      const allGamesResult = await axios(serverurl + "/allGames");
+      const allGamesResult = await axios(serverurl + '/allGames');
       let newGames = allGamesResult.data;
       newGames.forEach(function (game) {
         game.unsortedPlayers = [];
@@ -130,10 +129,10 @@ function App() {
       });
       setRecentGames(newGames);
       setIsLoadingMoreGames(false);
-      setView("allGames");
+      setView('allGames');
     } else {
       setRecentGames(recentGames.slice(0, 5));
-      setView("recentGames");
+      setView('recentGames');
     }
   };
 
@@ -150,13 +149,11 @@ function App() {
     }
     game.cumulativeScores = holder;
     setViewGame(game);
-    setView("gamepage");
+    setView('gamepage');
   };
 
   const handleSort = (column) => {
-    console.log("sorting");
-    console.log(players[0][column]);
-    if (column === "pph") {
+    if (column === 'pph') {
       setPlayers(
         players.forEach(
           (player) => (player.pph = player.totalScore / player.totalHands)
@@ -168,16 +165,15 @@ function App() {
         a[column] < b[column] ? 1 : a[column] > b[column] ? -1 : 0
       ),
     ]);
-    console.log(players);
   };
 
-  if (view === "scoreboard") {
+  if (view === 'scoreboard') {
     return <Scoreboard submitGame={submitGame} setAppView={setView} />;
-  } else if (view === "gamepage") {
+  } else if (view === 'gamepage') {
     return (
       <GamePage game={viewGame} setAppView={setView}>
         <button
-          onClick={() => setView("home")}
+          onClick={() => setView('home')}
           className="border border-black rounded-lg p-2 bg-white mb-6 text-stone-900 text-lg"
         >
           Back to Home
@@ -201,7 +197,7 @@ function App() {
             handleSort={handleSort}
           />
           <h1 className="text-2xl font-semibold text-stone-900">
-            Game History{" "}
+            Game History{' '}
           </h1>
           <GameHistory
             games={recentGames}
@@ -215,9 +211,9 @@ function App() {
               onClick={() => manageGames()}
               className="border border-black rounded-lg p-2 bg-white mb-6"
             >
-              {view === "allGames"
-                ? "Show only recent games"
-                : "See more games"}
+              {view === 'allGames'
+                ? 'Show only recent games'
+                : 'See more games'}
             </button>
           )}
         </Homepage>

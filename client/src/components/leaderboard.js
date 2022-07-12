@@ -1,11 +1,9 @@
-import React from "react";
+import React from 'react';
 
 function Leaderboard(props) {
   const formatName = (name) => {
     return name.charAt(0).toUpperCase() + name.toLowerCase().slice(1);
   };
-
-  console.log("leaderboard re-render");
 
   return (
     <div className="border p-4 bg-white opacity-100 rounded-lg text-stone-900">
@@ -19,20 +17,20 @@ function Leaderboard(props) {
               <th className="py-2 px-4">Name</th>
               <th
                 className="py-2 px-2 hover:cursor-pointer"
-                onClick={() => props.handleSort("totalScore")}
+                onClick={() => props.handleSort('totalScore')}
               >
                 Points
               </th>
               <th className="py-2 px-1">Games</th>
               <th
                 className="py-2 px-1 hover:cursor-pointer"
-                onClick={() => props.handleSort("wins")}
+                onClick={() => props.handleSort('wins')}
               >
                 Wins
               </th>
               <th
                 className="py-2 px-1 hover:cursor-pointer"
-                onClick={() => props.handleSort("pph")}
+                onClick={() => props.handleSort('pph')}
               >
                 PPH
               </th>
