@@ -23,6 +23,7 @@
     "helmet": "^4.6.0",
     "mongoose": "^6.0.12",
     "nodemon": "^2.0.14",
+    "react-ga": "^3.3.1",
     "tailwindcss": "^3.0.7",
     "underscore": "^1.13.2"
   }

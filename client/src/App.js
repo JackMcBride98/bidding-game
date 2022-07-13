@@ -5,6 +5,9 @@ import Scoreboard from './components/scoreboard';
 import Leaderboard from './components/leaderboard';
 import GameHistory from './components/gamehistory';
 import GamePage from './components/gamepage';
+import ReactGA from 'react-ga';
+ReactGA.initialize('G-VME9Y86TS0');
+ReactGA.pageview(window.location.pathname + window.location.search);
 // const serverurl =  "http://localhost:5000";
 const serverurl = '';
 
