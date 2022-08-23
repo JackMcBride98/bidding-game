@@ -14,22 +14,22 @@ function Leaderboard(props) {
           <thead>
             <tr className="">
               <th className="py-2 px-1"></th>
-              <th className="py-2 px-4">Name</th>
+              <th className="py-2 px-4 unselectable">Name</th>
               <th
-                className="py-2 px-2 hover:cursor-pointer"
+                className="py-2 px-2 hover:cursor-pointer unselectable"
                 onClick={() => props.handleSort('totalScore')}
               >
                 Points
               </th>
-              <th className="py-2 px-1">Games</th>
+              <th className="py-2 px-1 unselectable">Games</th>
               <th
-                className="py-2 px-1 hover:cursor-pointer"
+                className="py-2 px-1 hover:cursor-pointer unselectable"
                 onClick={() => props.handleSort('wins')}
               >
                 Wins
               </th>
               <th
-                className="py-2 px-1 hover:cursor-pointer"
+                className="py-2 px-1 hover:cursor-pointer unselectable"
                 onClick={() => props.handleSort('pph')}
               >
                 PPH
