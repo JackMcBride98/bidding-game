@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/d55f9730-09a8-4df3-9ce2-a673108cdf56/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/bidding-game",
+  "appService.deploySubpath": "."
+}
